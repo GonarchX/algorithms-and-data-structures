@@ -14,13 +14,11 @@ private:
         Node *next;
         
         Node(int data, Node * prev = nullptr, Node * next = nullptr)
-            {
-                this->data = data;
-                this->prev = prev;
-                this->next = next;
-            };
-        
-        //~Node();
+        {
+            this->data = data;
+            this->prev = prev;
+            this->next = next;
+        };
     };
 
     Node  *head;
@@ -35,8 +33,7 @@ public:
     }
     ~DoubleLinkedList()
     {
-        //std::cout << "\nDelete list";
-        size = 0;
+        clear();
     }
     
     //Work with double linked list
@@ -49,7 +46,7 @@ public:
 
     void popFront(); //  removing the first element
 
-    void insert(int, const size_t); //  adding an element at index 
+    void insert(const int, const size_t); //  adding an element at index 
 
     int at(const size_t); //  getting an element by index
 
@@ -61,11 +58,11 @@ public:
 
     void clear(); //  removing all list items
 
-    void set(int, const size_t); //  replacing the element by index with the passed element
+    void set(const int, const size_t); //  replacing the element by index with the passed element
     
     bool isEmpty() const; //  checking if the list is empty
 
     Node *findNode(const size_t index); //Finding the required node in the list
 
-    void pushBack(DoubleLinkedList List); // Push another list to the end
+    void pushBack(DoubleLinkedList &List); // Push another list to the end
 };

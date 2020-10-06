@@ -69,7 +69,7 @@ void   DoubleLinkedList::popFront() //  removing the first element
 	size--;
 }
 
-void   DoubleLinkedList::insert(int data, const size_t index) //  insert element before element at index
+void   DoubleLinkedList::insert(const int data, const size_t index) //  insert element before element at index
 {	
 	Node *current = findNode(index);
 	
@@ -98,32 +98,30 @@ void   DoubleLinkedList::remove(const size_t index) //  deleting an element by i
 		delete current;
 		head = nullptr;
 		tail = nullptr;
+		size--;
 	}
 	else if (current == head) {
-		current = current->next;
-		current->prev = nullptr;
-		delete current->prev;
-		head = current;
+		popFront();
 	}
 	else if (current == tail) {
-		current = current->prev;
-		current->next = nullptr;
-		delete current->next;
-		tail = current;
+		popBack();
 	}
 	else {
 		current->prev->next = current->next;
 		current->next->prev = current->prev;
 		delete current;
-	}
-	size--;
+		size--;
+	}	
 }
 
 size_t DoubleLinkedList::getSize() const{return size;} //  getting list size
 
 void   DoubleLinkedList::printToConsole()const //  output of list items to the console
 {
-	if (!size) cout << "List is empty";
+	if (!size) {
+		cout << "List is empty";
+		return;
+	}
 	Node *current = head;
 	while(current) {
 		cout << current->data << " ";
@@ -133,11 +131,13 @@ void   DoubleLinkedList::printToConsole()const //  output of list items to the c
 
 void   DoubleLinkedList::clear() //  removing all list items
 {
-	size_t listSize = size;
-	for (size_t count = 0; count < listSize; count++) popBack();
+	if (size == 0) return;
+	while (size != 0) {
+		popBack();
+	}
 }
 
-void   DoubleLinkedList::set(int data, const size_t index) //  replacing the element by index with the passed element
+void   DoubleLinkedList::set(const int data, const size_t index) //  replacing the element by index with the passed element
 {
 	Node *current = findNode(index);
 	current->data = data;
@@ -145,7 +145,7 @@ void   DoubleLinkedList::set(int data, const size_t index) //  replacing the ele
 
 bool   DoubleLinkedList::isEmpty() const //  checking if the list is empty
 {
-	if(getSize()) return true;
+	if(!getSize()) return true;
     else return false;
 }
 
@@ -154,14 +154,14 @@ DoubleLinkedList::Node *DoubleLinkedList::findNode(const size_t index) //Finding
 	if (index >= size) throw out_of_range("Index is greater than list size");
 	Node *current;
 
-	//If the required node is on the LEFT side of the list
+	//If the required node is on the LEFT side of the list, we will start search from head
 	if (index < (size / 2)){ 
 		current = head;
 		for (size_t count = 0; count != index; count++) {
 			current = current->next;
 		}
 	}
-	//If the required node is on the RIGHT side of the list
+	//If the required node is on the RIGHT side of the list, we will start search from tail
 	else
 	{
 		current = tail;
@@ -173,8 +173,19 @@ DoubleLinkedList::Node *DoubleLinkedList::findNode(const size_t index) //Finding
 	return current;
 }
 
-void DoubleLinkedList::pushBack(DoubleLinkedList anotherList)
+void DoubleLinkedList::pushBack(DoubleLinkedList &connectedList)
 {
-	tail->next = anotherList.head;
-	anotherList.head->prev = tail;
+	if (connectedList.size == 0) return;
+	//Connecting head of connected list with tail of our list
+	tail->next = connectedList.head;
+	connectedList.head->prev = tail;
+
+	//Set tail of connected list like tail of our list 
+	tail = connectedList.tail;
+	size += connectedList.size;
+
+	//Remove info about connected list
+	connectedList.head = nullptr;
+	connectedList.tail = nullptr;
+	connectedList.size = 0;
 }
