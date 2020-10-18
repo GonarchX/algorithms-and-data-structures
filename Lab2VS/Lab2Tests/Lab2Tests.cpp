@@ -69,7 +69,7 @@ namespace Lab2Tests
 			}
 			catch (const std::exception& message)
 			{
-				Assert::AreEqual(message.what(), "You tried to sort an empty list!");
+				Assert::AreEqual(message.what(), "You tried to sort an empty array!");
 			}
 		}
 
@@ -162,7 +162,7 @@ namespace Lab2Tests
 			}
 			catch (const std::exception& message)
 			{
-				Assert::AreEqual(message.what(), "You tried to sort an empty list!");
+				Assert::AreEqual(message.what(), "You tried to sort an empty array!");
 			}
 		}
 
@@ -255,7 +255,7 @@ namespace Lab2Tests
 			}
 			catch (const std::exception& message)
 			{
-				Assert::AreEqual(message.what(), "You tried to sort an empty list!");
+				Assert::AreEqual(message.what(), "You tried to sort an empty array!");
 			}
 		}
 
@@ -348,7 +348,7 @@ namespace Lab2Tests
 			}
 			catch (const std::exception& message)
 			{
-				Assert::AreEqual(message.what(), "You tried to sort an empty list!");
+				Assert::AreEqual(message.what(), "You tried to sort an empty array!");
 			}
 		}
 

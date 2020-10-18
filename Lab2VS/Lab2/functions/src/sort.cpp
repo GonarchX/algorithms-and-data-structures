@@ -87,7 +87,7 @@ int binarySearch(vector<int>& array, const int key)
 
 void quickSort(vector<int>& array, int first, int last)
 {
-    if (!array.size()) throw invalid_argument("You tried to sort an empty list!");
+    if (!array.size()) throw invalid_argument("You tried to sort an empty array!");
 
     if (first < last)
     {
@@ -114,7 +114,7 @@ void quickSort(vector<int>& array, int first, int last)
 
 void insertionSort(vector<int>& array)
 {
-    if (!array.size()) throw invalid_argument("You tried to sort an empty list!");
+    if (!array.size()) throw invalid_argument("You tried to sort an empty array!");
 
     for (size_t i = 1; i < array.size(); i++) {
         // At every step of the loop, 
@@ -128,7 +128,7 @@ void insertionSort(vector<int>& array)
 
 void bogoSort(vector<int>& array)
 {
-    if (!array.size()) throw invalid_argument("You tried to sort an empty list!");
+    if (!array.size()) throw invalid_argument("You tried to sort an empty array!");
 
     size_t i = 1;
     while (i < array.size())
