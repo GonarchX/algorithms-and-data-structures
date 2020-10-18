@@ -48,8 +48,6 @@ bool checkSort(const vector<int>& array);
 
 int binarySearch(vector<int>& array, const int key);
 
-int partition(vector<int>& array, int left, int right);
-
 void quickSort(vector<int>& array, int left, int right);
 
 void insertionSort(vector<int>& array);

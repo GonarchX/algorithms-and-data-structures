@@ -85,38 +85,30 @@ int binarySearch(vector<int>& array, const int key)
     return -1; //If we don't have element with this value in array
 }
 
-int partition(vector<int>& array, int left, int right)
-{
-    int pivot = array[right]; // pivot  
-    int i = (left - 1); // Index of smaller element  
-
-    for (int j = left; j <= right - 1; j++)
-    {
-        // If current element is smaller than the pivot  
-        if (array[j] < pivot)
-        {
-            i++; // increment index of smaller element  
-            swap(&array[i], &array[j]);
-        }
-    }
-    swap(&array[i + 1], &array[right]);
-    return (i + 1);
-}
-
-void quickSort(vector<int>& array, int left, int right)
+void quickSort(vector<int>& array, int first, int last)
 {
     if (!array.size()) throw invalid_argument("You tried to sort an empty list!");
 
-    if (left < right)
+    if (first < last)
     {
-        // pi is partitioning index, array[p] is now  
-        // at right place 
-        int pi = partition(array, left, right);
-
+        int left = first;
+        int right = last;
+        int middle = array[(right - left) / 2 + left];
+        do
+        {
+            while (array[left] < middle) left++;
+            while (array[right] > middle) right--;
+            if (left <= right)
+            {
+                swap(&array[left], &array[right]);
+                left++;
+                right--;
+            }
+        } while (left <= right);
         // Separately sort elements before partition
-        quickSort(array, left, pi - 1);
+        quickSort(array, first, right);
         // and after partition
-        quickSort(array, pi + 1, right);
+        quickSort(array, left, last);
     }
 }
 
