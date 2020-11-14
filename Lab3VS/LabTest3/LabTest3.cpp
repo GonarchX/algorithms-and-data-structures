@@ -7,32 +7,32 @@ namespace LabTest3
 	TEST_CLASS(LabTest3)
 	{
 	public:
-		TEST_METHOD(bftarySearchTree_emptyTree)
+		TEST_METHOD(BinarySearchTree_emptyTree)
 		{
 			BinSearchTree Tree;
 			// If the tree is empty, then the "contains" method will return a false result.
 			Assert::IsFalse(Tree.contains(999));
 		}
-		TEST_METHOD(bftarySearchTree_contains_missingElement)
+		TEST_METHOD(BinarySearchTree_contains_missingElement)
 		{
 			BinSearchTree Tree;
 			Tree.insert(1);
 			Assert::IsFalse(Tree.contains(999));
 		}
-		TEST_METHOD(bftarySearchTree_containsAndCheck_oneElement)
+		TEST_METHOD(BinarySearchTree_containsAndCheck_oneElement)
 		{
 			BinSearchTree Tree;
 			Tree.insert(1);
 			Assert::IsTrue(Tree.contains(1));
 		}
-		TEST_METHOD(bftarySearchTree_containsAndCheck_twoElements)
+		TEST_METHOD(BinarySearchTree_containsAndCheck_twoElements)
 		{
 			BinSearchTree Tree;
 			Tree.insert(1);
 			Tree.insert(2);
 			Assert::IsTrue(Tree.contains(2));
 		}
-		TEST_METHOD(bftarySearchTree_containsAndCheck_manyElements)
+		TEST_METHOD(BinarySearchTree_containsAndCheck_manyElements)
 		{
 			BinSearchTree Tree;
 			Tree.insert(3);
@@ -63,7 +63,7 @@ namespace LabTest3
 			Assert::IsFalse(Tree.contains(999));
 			Assert::IsFalse(Tree.contains(888));
 		}
-		TEST_METHOD(bftarySearchTree_remove_exception_manyElements)
+		TEST_METHOD(BinarySearchTree_remove_exception_manyElements)
 		{
 			//Check exception
 			try
@@ -76,7 +76,7 @@ namespace LabTest3
 				Assert::AreEqual(message, "Tree not contains this key!");
 			}
 		}
-		TEST_METHOD(bftarySearchTree_remove_exception_emptyList)
+		TEST_METHOD(BinarySearchTree_remove_exception_emptyList)
 		{
 			//Check exception
 			try
@@ -98,14 +98,14 @@ namespace LabTest3
 				Assert::AreEqual(message, "Tree not contains this key!");
 			}
 		}
-		TEST_METHOD(bftarySearchTree_remove_noLeafs_removingRootNode)
+		TEST_METHOD(BinarySearchTree_remove_noLeafs_removingRootNode)
 		{
 			BinSearchTree Tree;
 			Tree.insert(3);
 			Tree.remove(3);
 			Assert::IsTrue(!Tree.contains(3));
 		}
-		TEST_METHOD(bftarySearchTree_remove_noLeafs)
+		TEST_METHOD(BinarySearchTree_remove_noLeafs)
 		{
 			BinSearchTree Tree;
 			Tree.insert(3);
@@ -121,7 +121,7 @@ namespace LabTest3
 			// 3
 			Assert::IsTrue(!Tree.contains(2) && Tree.contains(3));
 		}
-		TEST_METHOD(bftarySearchTree_remove_oneLeaf_removingRootNode)
+		TEST_METHOD(BinarySearchTree_remove_oneLeaf_removingRootNode)
 		{
 			BinSearchTree Tree;
 			Tree.insert(3);
@@ -137,7 +137,7 @@ namespace LabTest3
 			// 3
 			Assert::IsTrue(!Tree.contains(3) && Tree.contains(2));
 		}
-		TEST_METHOD(bftarySearchTree_remove_oneLeaf)
+		TEST_METHOD(BinarySearchTree_remove_oneLeaf)
 		{
 			BinSearchTree Tree;
 			Tree.insert(3);
@@ -158,7 +158,7 @@ namespace LabTest3
 			// 1
 			Assert::IsTrue(!Tree.contains(2) && Tree.contains(3) && Tree.contains(1));
 		}
-		TEST_METHOD(bftarySearchTree_remove_twoLeaf_removeRootNode)
+		TEST_METHOD(BinarySearchTree_remove_twoLeaf_removeRootNode)
 		{
 			BinSearchTree Tree;
 			Tree.insert(3);
@@ -176,7 +176,7 @@ namespace LabTest3
 			//        2  
 			Assert::IsTrue(!Tree.contains(3) && Tree.contains(4) && Tree.contains(2));
 		}
-		TEST_METHOD(bftarySearchTree_remove_twoLeaf)
+		TEST_METHOD(BinarySearchTree_remove_twoLeaf)
 		{
 			BinSearchTree Tree;
 			Tree.insert(3);
