@@ -150,7 +150,7 @@ bool isFunc(const string& str)
 
 bool isOperator(const string& str)
 {
-    if (str == "-" || str == "+" || str == "/" || str == "*") return 1;
+    if (str == "-" || str == "+" || str == "/" || str == "*" || str == "^") return 1;
     else return 0;
 }
 
@@ -206,6 +206,7 @@ size_t getPrioritet(const string& str)
     case '-': return 1;
     case '/': return 2;
     case '*': return 2;
+    case '^': return 3;
     }
     throw runtime_error("Can't get prioritet!");
 }
@@ -377,6 +378,10 @@ double calculate(const Stack& postfix)
             else if (current == "*")
             {
                 stack.push(to_string(a * b));
+            }
+            else if (current == "^")
+            {
+                stack.push(to_string(pow(a, b)));
             }
         }
         stackIter->next();

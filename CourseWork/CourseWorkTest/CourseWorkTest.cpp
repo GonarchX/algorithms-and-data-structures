@@ -191,6 +191,12 @@ namespace CourseWorkTest
 			size_t prioritet = getPrioritet(str);
 			Assert::AreEqual(double(prioritet), double(0));
 		}
+		TEST_METHOD(getPrioritet_CorrectValue_Exponentiation)
+		{
+			string str = "^";
+			size_t prioritet = getPrioritet(str);
+			Assert::AreEqual(double(prioritet), double(3));
+		}
 		TEST_METHOD(isDigit_IncorrectPoints)
 		{
 			string str = ".5.";
@@ -355,11 +361,11 @@ namespace CourseWorkTest
 		}
 		TEST_METHOD(Calculate_CorrectInputSecond)
 		{
-			string str = "sin(0) / cos(pi) + ctg(999) + ( tg(pi) - ctg(999) + ln(e) ) + log(16) * ( sqrt(9) + cbrt(64) )";
+			string str = "sin(0) / cos(pi) + ctg(999) + ( tg(pi) - ctg(999) + ln(e) ) + log(16) * ( sqrt(9) + cbrt(64) ) - 5 ^ ( 3 - ln(e) )";
 			Stack tokens = parse(str);
 			Stack postfix = convertToPostfix(tokens);
 			double result = calculate(postfix);
-			Assert::AreEqual(result, double(29));			
+			Assert::AreEqual(result, double(4));			
 		}
 	};
 }
