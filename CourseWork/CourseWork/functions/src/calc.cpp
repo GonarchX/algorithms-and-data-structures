@@ -360,9 +360,9 @@ double calculate(const Stack& postfix)
         else if (isOperator(current))
         {
             if (stack.getSize()) b = stod(stack.pop());
-            else throw logic_error("Not enough operands for such a large number of operators");
+            else throw logic_error("Not enough operands for such a large number of operators!");
             if (stack.getSize()) a = stod(stack.pop());
-            else throw logic_error("Not enough operands for such a large number of operators");
+            else throw logic_error("Not enough operands for such a large number of operators!");
             if (current == "+")
             {
                 stack.push(to_string(a + b));
@@ -373,6 +373,7 @@ double calculate(const Stack& postfix)
             }
             else if (current == "/")
             {
+                if (b == 0) throw logic_error("The denominator of the fraction is zero!");
                 stack.push(to_string(a / b));
             }
             else if (current == "*")
@@ -386,5 +387,6 @@ double calculate(const Stack& postfix)
         }
         stackIter->next();
     }
+    if (stack.getSize() > 1) throw logic_error("Not enough operators for such a large number of operands!");
     return stod(stack.pop());
 }

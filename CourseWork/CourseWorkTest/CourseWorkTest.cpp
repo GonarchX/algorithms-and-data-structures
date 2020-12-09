@@ -348,7 +348,35 @@ namespace CourseWorkTest
 			}
 			catch (const std::exception& message)
 			{
-				Assert::AreEqual(message.what(), "Not enough operands for such a large number of operators");
+				Assert::AreEqual(message.what(), "Not enough operands for such a large number of operators!");
+			}
+		}
+		TEST_METHOD(Calculate_NotEnoughOperators)
+		{
+			try
+			{
+				string str = "cos(0) sin(90)";
+				Stack tokens = parse(str);
+				Stack postfix = convertToPostfix(tokens);
+				double result = calculate(postfix);
+			}
+			catch (const std::exception& message)
+			{
+				Assert::AreEqual(message.what(), "Not enough operators for such a large number of operands!");
+			}
+		}
+		TEST_METHOD(Calculate_IncorrectDenominator)
+		{
+			try
+			{
+				string str = "5 / 0";
+				Stack tokens = parse(str);
+				Stack postfix = convertToPostfix(tokens);
+				double result = calculate(postfix);
+			}
+			catch (const std::exception& message)
+			{
+				Assert::AreEqual(message.what(), "The denominator of the fraction is zero!");
 			}
 		}
 		TEST_METHOD(Calculate_CorrectInput)
