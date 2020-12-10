@@ -71,10 +71,10 @@ void remDupSpaces(string& str)
     }
 }
 
-Stack parse(string& str)
+List parse(string& str)
 {
     remDupSpaces(str);
-    Stack tokens;
+    List tokens;
     string temp;
     for (string::iterator it = str.begin(); it != str.end(); it++)
     {
@@ -96,21 +96,21 @@ bool isDigit(const string& str)
 {
     if (str.find(".") != string::npos)
     {
-        //Проверка на наличие только одной точки в числе
+        // Check for the presence of only one point in the number
         if (str.find(".") != str.rfind(".")) return 0;
-        //Проверка положения точки(она не должна быть первым или последним символом)
+        // Check the position of the point (it must not be the first or last character)
         if ((str.find(".") == 0 || str.find(".") == str.size() - 1)) return 0;
     }
     if (str.find("-") != string::npos)
     {
-        //Если содержится только минус без числа 
+        // If there is only a minus without a number
         if (str.size() == 1) return 0;
-        //Проверка на наличие только одного минуса в числе
+        // Check for the presence of only one minus in the number
         if (str.find("-") != str.rfind("-")) return 0;
-        //Проверка положения минуса(он может быть только первым символом в числе)
+        // Check the position of the minus (it can only be the first character in the number)
         if (str.find("-") != 0) return 0;
     }
-    //Проверка на наличие цифр и отсутствие посторонних символов
+    // Check for the presence of numbers and the absence of extraneous characters
     return (str.find_first_not_of("0123456789.-") == string::npos && str.find_first_of("0123456789.-") != string::npos);
 }
 
@@ -125,7 +125,7 @@ bool isConst(const string& str)
 
 bool isFunc(const string& str)
 {
-    //Проверка на наличие двух скобок: откр. и закр.
+    // Check for two parentheses: open and close
     if ((str.find("(") == string::npos) || !checkCountBracket(str)) return 0;
 
     string funcName[8] = { "cos", "sin", "ctg", "tg", "ln", "log", "sqrt", "cbrt" };
@@ -138,9 +138,9 @@ bool isFunc(const string& str)
         if (argument.find(i) != string::npos)
         {
             count++;
-            //Если у нас в токене больше одной функции
+            // If we have more than one function in the token
             if (count != 1) return 0;
-            //Оставляем только аргумент внутри функции, чтобы проверить его на число
+            // Leave only the argument inside the function to check for a number
             argument.erase(argument.find(i), i.size() + 1);
             argument.erase(argument.size() - 1);
         }
@@ -154,13 +154,13 @@ bool isOperator(const string& str)
     else return 0;
 }
 
-void checkTokens(const Stack& tokens)
+void checkTokens(const List& tokens)
 {
-    Iterator* stackIter = tokens.create_iterator();
+    Iterator* listIter = tokens.create_iterator();
 
-    while (stackIter->has_next())
+    while (listIter->has_next())
     {
-        string token = stackIter->getCurrent();
+        string token = listIter->getCurrent();
         if (isOperator(token) || token == "(" || token == ")")
         {
             // OK
@@ -191,7 +191,7 @@ void checkTokens(const Stack& tokens)
             cout << token << " - ";
             throw runtime_error("Incorrect input! Try again...");
         }
-        stackIter->next();
+        listIter->next();
     }
 }
 
@@ -211,63 +211,63 @@ size_t getPrioritet(const string& str)
     throw runtime_error("Can't get prioritet!");
 }
 
-Stack convertToPostfix(Stack& tokens)
+List convertToPostfix(List& tokens)
 {
-    Stack postFix;
-    Stack stack;
-    Iterator* stackIter = tokens.create_iterator();
+    List postFix;
+    List list;
+    Iterator* listIter = tokens.create_iterator();
     string temp;
 
-    while (stackIter->has_next())
+    while (listIter->has_next())
     {
-        string token = stackIter->getCurrent();
-        //Если просматриваемый токен операнд, то помещаем в выходной поток
+        string token = listIter->getCurrent();
+        // If the token being viewed is an operand, then we put it into the output stream
         if (isDigit(token) || isFunc(token) || isConst(token)) postFix.push(token);
 
         else if (isOperator(token))
         {
-            //Если приоритет оператора, который находится наверху стека, 
-            //больше или равен приоритета токена.
-            //Пока не увидим оператор с меньшим приоритетом,
-            //извлекаем все операторы из стека в выходной поток 
-            //Затем помещаем просматриваемый оператор в стек. 
-            //Иначе помещаем просматриваемый оператор в стек сразу.
-            if (stack.getSize() && (getPrioritet(stack.getTail()) >= getPrioritet(token)))
+            // If the priority of the operator, which is at the top of the list,
+            // greater than or equal to the token priority.
+            // Until we see an operator with a lower priority,
+            // pop all operators from the list into the output stream
+            // Then push the operator we are looking at onto the list.
+            // Otherwise, push the operator being viewed onto the list immediately.
+            if (list.getSize() && (getPrioritet(list.getTail()) >= getPrioritet(token)))
             {
-                temp = stack.getTail();
-                while (stack.getSize() && stack.getTail() != "(" && getPrioritet(temp) >= getPrioritet(token))
+                temp = list.getTail();
+                while (list.getSize() && list.getTail() != "(" && getPrioritet(temp) >= getPrioritet(token))
                 {
-                    temp = stack.pop();
+                    temp = list.pop();
                     postFix.push(temp);
-                    if (stack.getSize()) temp = stack.getTail();
+                    if (list.getSize()) temp = list.getTail();
                 }
-                stack.push(token);
+                list.push(token);
             }
             else
             {
-                stack.push(token);
+                list.push(token);
             }
         }
         else if (token == "(")
         {
-            stack.push(token);
+            list.push(token);
         }
         else if (token == ")")
         {
-            temp = stack.pop();
-            // извлекаем из стека все символы до появления левой скобки 
-            // и добавляем их в выходной поток
+            temp = list.pop();
+            // pop all characters from the list until the left parenthesis appears
+            // and add them to the output stream
             while (temp != "(")
             {
                 postFix.push(temp);
-                temp = stack.pop();
+                temp = list.pop();
             }
         }
-        stackIter->next();
+        listIter->next();
     }
-    while (stack.getSize())
+    while (list.getSize())
     {
-        postFix.push(stack.pop());
+        postFix.push(list.pop());
     }
     return postFix;
 }
@@ -341,52 +341,52 @@ string convertFunc(string& str)
     return str;
 }
 
-double calculate(const Stack& postfix)
+double calculate(const List& postfix)
 {
-    Iterator* stackIter = postfix.create_iterator();
-    Stack stack;
-    while (stackIter->has_next())
+    Iterator* listIter = postfix.create_iterator();
+    List list;
+    while (listIter->has_next())
     {
-        string current = stackIter->getCurrent();
+        string current = listIter->getCurrent();
         double a;
         double b;
         if (isConst(current))
         {
             convertConst(current);
-            stack.push(current);
+            list.push(current);
         }
-        else if (isDigit(current)) stack.push(current);
-        else if (isFunc(current)) stack.push(convertFunc(current));
+        else if (isDigit(current)) list.push(current);
+        else if (isFunc(current)) list.push(convertFunc(current));
         else if (isOperator(current))
         {
-            if (stack.getSize()) b = stod(stack.pop());
+            if (list.getSize()) b = stod(list.pop());
             else throw logic_error("Not enough operands for such a large number of operators!");
-            if (stack.getSize()) a = stod(stack.pop());
+            if (list.getSize()) a = stod(list.pop());
             else throw logic_error("Not enough operands for such a large number of operators!");
             if (current == "+")
             {
-                stack.push(to_string(a + b));
+                list.push(to_string(a + b));
             }
             else if (current == "-")
             {
-                stack.push(to_string(a - b));
+                list.push(to_string(a - b));
             }
             else if (current == "/")
             {
                 if (b == 0) throw logic_error("The denominator of the fraction is zero!");
-                stack.push(to_string(a / b));
+                list.push(to_string(a / b));
             }
             else if (current == "*")
             {
-                stack.push(to_string(a * b));
+                list.push(to_string(a * b));
             }
             else if (current == "^")
             {
-                stack.push(to_string(pow(a, b)));
+                list.push(to_string(pow(a, b)));
             }
         }
-        stackIter->next();
+        listIter->next();
     }
-    if (stack.getSize() > 1) throw logic_error("Not enough operators for such a large number of operands!");
-    return stod(stack.pop());
+    if (list.getSize() > 1) throw logic_error("Not enough operators for such a large number of operands!");
+    return stod(list.pop());
 }

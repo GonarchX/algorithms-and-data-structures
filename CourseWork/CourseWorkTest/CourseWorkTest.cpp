@@ -2,7 +2,7 @@
 #include <exception>
 
 #include "../CourseWork/functions/lib/calc.hpp"
-#include "../CourseWork/functions/lib/stack.hpp"
+#include "../CourseWork/functions/lib/list.hpp"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -342,8 +342,8 @@ namespace CourseWorkTest
 			try
 			{
 				string str = "cos(0) + sin(90) - +";
-				Stack tokens = parse(str);
-				Stack postfix = convertToPostfix(tokens);
+				List tokens = parse(str);
+				List postfix = convertToPostfix(tokens);
 				double result = calculate(postfix);
 			}
 			catch (const std::exception& message)
@@ -356,8 +356,8 @@ namespace CourseWorkTest
 			try
 			{
 				string str = "cos(0) sin(90)";
-				Stack tokens = parse(str);
-				Stack postfix = convertToPostfix(tokens);
+				List tokens = parse(str);
+				List postfix = convertToPostfix(tokens);
 				double result = calculate(postfix);
 			}
 			catch (const std::exception& message)
@@ -370,8 +370,8 @@ namespace CourseWorkTest
 			try
 			{
 				string str = "5 / 0";
-				Stack tokens = parse(str);
-				Stack postfix = convertToPostfix(tokens);
+				List tokens = parse(str);
+				List postfix = convertToPostfix(tokens);
 				double result = calculate(postfix);
 			}
 			catch (const std::exception& message)
@@ -382,16 +382,16 @@ namespace CourseWorkTest
 		TEST_METHOD(Calculate_CorrectInput)
 		{			
 			string str = "cos(0) + ln(e)";
-			Stack tokens = parse(str);
-			Stack postfix = convertToPostfix(tokens);
+			List tokens = parse(str);
+			List postfix = convertToPostfix(tokens);
 			double result = calculate(postfix);
 			Assert::AreEqual(result, double(2));
 		}
 		TEST_METHOD(Calculate_CorrectInputSecond)
 		{
 			string str = "sin(0) / cos(pi) + ctg(999) + ( tg(pi) - ctg(999) + ln(e) ) + log(16) * ( sqrt(9) + cbrt(64) ) - 5 ^ ( 3 - ln(e) )";
-			Stack tokens = parse(str);
-			Stack postfix = convertToPostfix(tokens);
+			List tokens = parse(str);
+			List postfix = convertToPostfix(tokens);
 			double result = calculate(postfix);
 			Assert::AreEqual(result, double(4));			
 		}

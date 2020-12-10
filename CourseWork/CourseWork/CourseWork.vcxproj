@@ -20,13 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="functions\src\calc.cpp" />
-    <ClCompile Include="functions\src\stack.cpp" />
+    <ClCompile Include="functions\src\list.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions\lib\calc.hpp" />
     <ClInclude Include="functions\lib\iterator.hpp" />
-    <ClInclude Include="functions\lib\stack.hpp" />
+    <ClInclude Include="functions\lib\list.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

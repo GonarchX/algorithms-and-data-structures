@@ -21,7 +21,7 @@
     <ClCompile Include="..\CourseWork\functions\src\calc.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="..\CourseWork\functions\src\stack.cpp">
+    <ClCompile Include="..\CourseWork\functions\src\list.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

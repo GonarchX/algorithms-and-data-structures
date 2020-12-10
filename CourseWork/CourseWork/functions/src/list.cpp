@@ -1,10 +1,10 @@
 #include <iostream>
-#include "../lib/stack.hpp"
+#include "../lib/list.hpp"
 
 using namespace std;
 
 //adding to the end of the list
-void Stack::push(string data)
+void List::push(string data)
 {
     if (isEmpty()) {
 		head = new Node(data);
@@ -18,7 +18,7 @@ void Stack::push(string data)
 }
 
 //  remove and return the last element
-string Stack::pop()
+string List::pop()
 {
     if (isEmpty()) return nullptr;
 
@@ -42,15 +42,15 @@ string Stack::pop()
 }
 
 //  getting list size
-size_t Stack::getSize() const{return size;}
+size_t List::getSize() const{return size;}
 
 //  checking if the list is empty
-bool Stack::isEmpty() const
+bool List::isEmpty() const
 {
     return !getSize();    
 }
 
-void Stack::print() const
+void List::print() const
 {
 	Node *current = head;
 	while(current)
@@ -60,28 +60,28 @@ void Stack::print() const
 	}
 }
 
-string Stack::getHead() const {return head->data;}
+string List::getHead() const {return head->data;}
 
-string Stack::getTail() const {return tail->data;}
+string List::getTail() const {return tail->data;}
 
-// Work with stack iterator
+// Work with list iterator
 
-Iterator *Stack::create_iterator() const
+Iterator *List::create_iterator() const
 {
-    if (!head) throw ("Unable to create an iterator because the stack does not contain any elements!");
-	return new stackIterator(head);
+    if (!head) throw ("Unable to create an iterator because the list does not contain any elements!");
+	return new listIterator(head);
 }
 
-string Stack::stackIterator::getCurrent() {return current->data;}
+string List::listIterator::getCurrent() {return current->data;}
 
-void Stack::stackIterator::next()
+void List::listIterator::next()
 {
     if (!has_next()) throw out_of_range("No more elements");
 	string temp = current->data;
 	current = current->next;
 }
 
-bool Stack::stackIterator::has_next() 
+bool List::listIterator::has_next() 
 {
     return (current != nullptr);
 }

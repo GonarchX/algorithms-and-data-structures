@@ -3,7 +3,7 @@
 
 #include "iterator.hpp"
 
-class Stack
+class List
 {
 private:
     class Node
@@ -25,7 +25,7 @@ private:
     Node  *tail;
     size_t size;
 public:
-    Stack()
+    List()
     {
         head = nullptr;
         tail = nullptr;
@@ -35,11 +35,11 @@ public:
     //Work with iterator
     Iterator *create_iterator() const;
 
-    class stackIterator: public Iterator{
+    class listIterator: public Iterator{
         private:
             Node *current;
         public:            
-            stackIterator(Node *start) : current(start){}
+            listIterator(Node *start) : current(start){}
             std::string getCurrent() override;
             void next() override;
             bool has_next() override;
@@ -59,5 +59,5 @@ public:
 
     void print() const;
 
-    friend Stack parse(std::string &str);
+    friend List parse(std::string &str);
 };

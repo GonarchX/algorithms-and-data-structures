@@ -157,7 +157,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\CourseWork\functions\src\calc.cpp" />
-    <ClCompile Include="..\CourseWork\functions\src\stack.cpp" />
+    <ClCompile Include="..\CourseWork\functions\src\list.cpp" />
     <ClCompile Include="CourseWorkTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
